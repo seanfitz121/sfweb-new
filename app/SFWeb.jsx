@@ -5,9 +5,10 @@ const ThemeContext = createContext();
 const useTheme = () => useContext(ThemeContext);
 
 function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(() => {
-    try { return localStorage.getItem("sfweb-theme") === "dark"; } catch { return false; }
-  });
+  const [dark, setDark] = useState(false);
+  useEffect(() => {
+    try { setDark(localStorage.getItem("sfweb-theme") === "dark"); } catch {}
+  }, []);
   useEffect(() => {
     try { localStorage.setItem("sfweb-theme", dark ? "dark" : "light"); } catch {}
   }, [dark]);
@@ -19,8 +20,9 @@ const RouterContext = createContext();
 const useRouter = () => useContext(RouterContext);
 
 function Router({ children }) {
-  const [path, setPath] = useState(window.location.hash.slice(1) || "/");
+  const [path, setPath] = useState("/");
   useEffect(() => {
+    setPath(window.location.hash.slice(1) || "/");
     const handler = () => setPath(window.location.hash.slice(1) || "/");
     window.addEventListener("hashchange", handler);
     return () => window.removeEventListener("hashchange", handler);
