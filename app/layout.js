@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/next';
+
 export const metadata = {
   title: 'SFWeb – Web Design for Local Businesses',
   description: 'Premium websites built specifically for local service businesses in Ireland. Professional web design for plumbers, electricians, trades and service businesses.',
@@ -39,7 +41,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
